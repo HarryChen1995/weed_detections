@@ -1,0 +1,50 @@
+<annotation>
+	<folder>buckhorn plantain</folder>
+	<filename>buckhorn plantain180.png</filename>
+	<path>/home/hanlinchen/Desktop/weeds_detections/images/buckhorn plantain/buckhorn plantain180.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>539</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>buckhorn plantain</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>62</xmin>
+			<ymin>15</ymin>
+			<xmax>314</xmax>
+			<ymax>442</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>buckhorn plantain</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>296</xmin>
+			<ymin>61</ymin>
+			<xmax>473</xmax>
+			<ymax>453</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>buckhorn plantain</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>489</xmin>
+			<ymin>109</ymin>
+			<xmax>772</xmax>
+			<ymax>453</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>thistle</folder>
+	<filename>thistle244.jpg</filename>
+	<path>/home/hanlinchen/Desktop/weeds_detections/images/thistle/thistle244.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>271</width>
+		<height>344</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>thistle</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>150</xmin>
+			<ymin>259</ymin>
+			<xmax>231</xmax>
+			<ymax>344</ymax>
+		</bndbox>
+	</object>
+</annotation>

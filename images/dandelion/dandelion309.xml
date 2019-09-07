@@ -1,0 +1,26 @@
+<annotation>
+	<folder>dandelion</folder>
+	<filename>dandelion309.jpg</filename>
+	<path>/home/hanlinchen/Desktop/weeds_detections/images/dandelion/dandelion309.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>692</width>
+		<height>900</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dandelion</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>183</xmin>
+			<ymin>268</ymin>
+			<xmax>516</xmax>
+			<ymax>503</ymax>
+		</bndbox>
+	</object>
+</annotation>

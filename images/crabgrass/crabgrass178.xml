@@ -1,0 +1,26 @@
+<annotation>
+	<folder>crabgrass</folder>
+	<filename>crabgrass178.jpg</filename>
+	<path>/home/hanlinchen/Desktop/weeds_detections/images/crabgrass/crabgrass178.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>219</width>
+		<height>512</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>crabgrass</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>38</xmin>
+			<ymin>322</ymin>
+			<xmax>162</xmax>
+			<ymax>428</ymax>
+		</bndbox>
+	</object>
+</annotation>

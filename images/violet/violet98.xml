@@ -1,0 +1,26 @@
+<annotation>
+	<folder>violet</folder>
+	<filename>violet98.JPG</filename>
+	<path>/home/hanlinchen/Desktop/weeds_detections/images/violet/violet98.JPG</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>235</width>
+		<height>321</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>violet</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>18</xmin>
+			<ymin>42</ymin>
+			<xmax>214</xmax>
+			<ymax>239</ymax>
+		</bndbox>
+	</object>
+</annotation>

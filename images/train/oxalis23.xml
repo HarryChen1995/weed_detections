@@ -1,0 +1,26 @@
+<annotation>
+	<folder>oxalis</folder>
+	<filename>oxalis23.jpeg</filename>
+	<path>/home/hanlinchen/Desktop/weeds_detections/images/oxalis/oxalis23.jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>600</width>
+		<height>600</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>oxalis</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>342</xmin>
+			<ymin>368</ymin>
+			<xmax>600</xmax>
+			<ymax>535</ymax>
+		</bndbox>
+	</object>
+</annotation>

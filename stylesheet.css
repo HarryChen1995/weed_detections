@@ -1,0 +1,29 @@
+QWidget {
+    background-color: rgba(196, 199, 202, 0.856);
+}
+
+QPushButton{
+
+
+    border:5px solid rgb(180, 207, 247); 
+    border-radius:20px;
+    border-style:outset
+}
+
+QLabel{
+
+    background-color:white
+
+}
+QProgressBar{
+    border: 3px solid rgb(95, 94, 94);
+    border-radius: 5px;
+    border-style:outset;
+    text-align: center
+}
+
+QProgressBar::chunk {
+    background-color: rgb(95, 167, 226);
+    width: 10px;
+    margin: 1px;
+}
