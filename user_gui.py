@@ -7,7 +7,7 @@ with open("weeds.json","r") as jfile:
 import os
 import numpy as np
 from PyQt5.QtCore import QThread, pyqtSignal,pyqtSlot,Qt
-from PyQt5.QtWidgets import QApplication, QDialog, QWidget,QProgressBar,QPushButton,QToolTip,QFileDialog,QInputDialog,QLabel
+from PyQt5.QtWidgets import QApplication, QSizePolicy,QDialog, QWidget,QProgressBar,QPushButton,QToolTip,QFileDialog,QInputDialog,QLabel
 from PyQt5.QtGui import QIcon, QFont,QPixmap,QImage
 from Predict_Image import predict
 
@@ -75,13 +75,14 @@ class Windows(QWidget):
         self.label7=QLabel("<b>Results:<b>",self)
         self.label7.setGeometry(670,165,70,20)
         self.label7.setStyleSheet("QLabel {  background-color: rgba(196, 199, 202, 0.856)}")
-
+        
         self.label6 = QLabel(self)
         self.label6.setGeometry(660, 180, 325, 400)
         self.label6.setToolTip("Recognition Scores")
         self.label6.setStyleSheet("QLabel {  background-color: rgba(196, 199, 202, 0.856);\
              border: 5px solid rgb(95, 94, 94);\
              border-radius:7px;\
+             font-size: 12px;\
              border-style:outset;\
              margin:5px}")
     
@@ -166,7 +167,8 @@ class Windows(QWidget):
         string =""
         if len(val[1]) > 0:
             for weed_id, score in val[1].items():
-                string += weed[weed_id]["name"]+": "+str(round(score*100,2))+"%<br>"
+                string += "<b>"+weed[weed_id]["name"]+"</b>: "+str(round(score*100,2))+"%<br>"
+                string += "<b>the chemical killer</b>:<br>"+weed[weed_id]["action"]+"<br><br>"
             self.label6.setText(string)
 
 

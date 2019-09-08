@@ -1,13 +1,16 @@
 {
 
    "1":{
-       "name":"buckhorn plantian"
+       "name":"buckhorn plantian",
+       "action" : "Snapshot 2.5 TG - 50 lbs<br>SpeedZone Broadleaf Herbicide for Turf - Gallon<br>SpeedZone Southern Herbicide<br>SpeedZone Herbicide 2.5 Gallon<br>Gallery 75 DF Specialty Herbicide<br>Ferti-lome Weed-Out Lawn Weed Killer with Trimec"
 
    },
    "2": {
-    "name":"dandelion"
+    "name":"dandelion",
+    "action" : "Southern Ag- 12401- Suflan A.S.<br>Compare-N-Save Concentrate Grass and Weed Killer<br>Southern Ag 2, 4-D Amine Weed Killer<br>Scotts Turf Builder Weed and Feed Fertilizer<br>Ortho Ground Clear Vegetation Killer Concentrate"
    },
    "3": {
-    "name":"oxalis"
+    "name":"oxalis",
+    "action" : "Helena Pro-Mate Barricade & Fertilizer 0-0-7<br>Howard Johnson Crabgrass Control<br>Lebanon Pro Fertilizer (0-0-7)<br>Anderson Turf Products Crabgrass Preventer"
    }
 }
