@@ -127,7 +127,7 @@ class Windows(QWidget):
         self.show()
 
     def upload(self):
-        self.image,_= QFileDialog.getOpenFileName(self, 'Open file', '/home',"Images (*.png)")
+        self.image,_= QFileDialog.getOpenFileName(self, 'Open file', '/home',"Images (*.png *.jpg *jpeg)")
         
         if self.image:
             self.label4.setText("<b>Image Uploaded Successfully !!!<\b>")
