@@ -6,9 +6,9 @@ with open("weeds.json","r") as jfile:
 
 import os
 import numpy as np
-from PyQt5.QtCore import QThread, pyqtSignal,pyqtSlot,Qt
+from PyQt5.QtCore import QThread, pyqtSignal,pyqtSlot,Qt,QSize
 from PyQt5.QtWidgets import QApplication, QSizePolicy,QDialog, QWidget,QProgressBar,QPushButton,QToolTip,QFileDialog,QInputDialog,QLabel
-from PyQt5.QtGui import QIcon, QFont,QPixmap,QImage
+from PyQt5.QtGui import QIcon, QFont,QPixmap,QImage,QMovie
 from Predict_Image import predict
 
 
@@ -46,9 +46,6 @@ class Windows(QWidget):
         label2.setScaledContents(True)
         label2.move(900,0)
         label2.resize(100,100)
-
-
-
         self.label5 = QLabel(self)
         self.label5.move(0,180)
         self.label5.setToolTip("Display Recognized Image Here")
@@ -94,6 +91,8 @@ class Windows(QWidget):
         button1.resize(150,50)
         button1.move(500,110)
         button1.setShortcut('shift+O')
+        button1.setIcon(QIcon("upload.ico"))
+        button1.setIconSize(QSize(24,24))
         button1.setStyleSheet("QPushButton { background-color: lightgray }"
                       "QPushButton:pressed { background-color: gray }" )
         button1.clicked.connect(self.upload)
@@ -103,6 +102,8 @@ class Windows(QWidget):
         button2.resize(150,50)
         button2.move(700,110)
         button2.setShortcut('shift+S')
+        button2.setIcon(QIcon("download.ico"))
+        button2.setIconSize(QSize(24,24))
         button2.setStyleSheet("QPushButton { background-color: lightgray }"
                       "QPushButton:pressed { background-color: gray }" )
         button2.clicked.connect(self.save)
@@ -111,6 +112,8 @@ class Windows(QWidget):
         self.button3.setToolTip("Shortcut <b>shift+R</b>")
         self.button3.resize(150,50)
         self.button3.move(700,660)
+        self.button3.setIcon(QIcon("recognize.ico"))
+        self.button3.setIconSize(QSize(24,24))
         self.button3.setShortcut('shift+R')
         self.button3.setStyleSheet("QPushButton { background-color: lightgray }"
                       "QPushButton:pressed { background-color: gray }" )
@@ -133,6 +136,7 @@ class Windows(QWidget):
             self.label5.setPixmap(pixmap3)
             self.label5.setScaledContents(True)
             self.button3.setText("Recognize Image")
+            self.button3.setIcon(QIcon("recognize.ico"))
             self.button3.setShortcut('shift+R')
         
         
@@ -147,12 +151,14 @@ class Windows(QWidget):
             self.Task = Thread(self.image)
             self.Task.signal.connect(self.Finish)
             self.progress.setRange(0,0)
+            self.button3.setIcon(QIcon())
             self.button3.setText("working..")
             self.Task.start()
         
     def Finish(self,val):
         self.progress.setRange(0,1)
         self.progress.setValue(1)
+        self.button3.setIcon(QIcon("complete.ico"))
         self.button3.setText("Done")
         self.button3.setShortcut('shift+R')
         self.label4.setText("")
