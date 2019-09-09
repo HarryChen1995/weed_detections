@@ -110,7 +110,7 @@ class Windows(QWidget):
 
         self.button3=QPushButton('Recognize Image',self)
         self.button3.setToolTip("Shortcut <b>shift+R</b>")
-        self.button3.resize(150,50)
+        self.button3.resize(175,50)
         self.button3.move(700,660)
         self.button3.setIcon(QIcon("recognize.ico"))
         self.button3.setIconSize(QSize(24,24))
@@ -127,7 +127,7 @@ class Windows(QWidget):
         self.show()
 
     def upload(self):
-        self.image,_= QFileDialog.getOpenFileName(self, 'Open file', '/home',"Images (*.png *.jpg *jpeg)")
+        self.image,_= QFileDialog.getOpenFileName(self, 'Open file', '/home',"Images (*.png)")
         
         if self.image:
             self.label4.setText("<b>Image Uploaded Successfully !!!<\b>")
@@ -180,9 +180,9 @@ class Windows(QWidget):
 
     def save(self):
         if self.button3.text() =="Done":
-            fname, ok = QInputDialog.getText(self, 'Save File', 'enter file name(.jpg, .png, .jpeg):')
+            image,ok= QFileDialog.getSaveFileName(self, 'save image', '/home',"Images (*.png *.jpg *jpeg)")
             if ok:
-                cv2.imwrite(fname,self.finish_image)
+                cv2.imwrite(image,self.finish_image)
 
 
 
