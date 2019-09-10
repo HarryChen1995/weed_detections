@@ -6,7 +6,9 @@ with open("weeds.json","r") as jfile:
 
 import os
 import numpy as np
-from PyQt5.QtCore import QThread, pyqtSignal,pyqtSlot,Qt,QSize
+from googlesearch import search
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtCore import QThread, pyqtSignal,pyqtSlot,Qt,QSize,QUrl
 from PyQt5.QtWidgets import QApplication, QSizePolicy,QDialog, QWidget,QProgressBar,QPushButton,QToolTip,QFileDialog,QInputDialog,QLabel
 from PyQt5.QtGui import QIcon, QFont,QPixmap,QImage,QMovie
 from Predict_Image import predict
@@ -25,7 +27,15 @@ class Thread(QThread):
         self.signal.emit(result)
 
 
+class web_windows(QWebEngineView):
+    def __init__(self):
+        super(web_windows,self).__init__()
+        self.InitGUI()
 
+
+
+    def InitGUI(self):
+        self.setGeometry(200,500,1200,700)
 
 class Windows(QWidget):
     def __init__(self):
@@ -119,7 +129,19 @@ class Windows(QWidget):
                       "QPushButton:pressed { background-color: gray }" )
         self.button3.clicked.connect(self.start_thread)
 
-
+        
+        self.search_button=QPushButton('Google Search',self)
+        self.search_button.setToolTip("Shortcut <b>shift+s</b>")
+        self.search_button.resize(175,50)
+        self.search_button.move(500,660)
+        self.search_button.setIcon(QIcon("search.ico"))
+        self.search_button.setIconSize(QSize(24,24))
+        self.search_button.setShortcut('shift+R')
+        self.search_button.setStyleSheet("QPushButton { background-color: lightgray }"
+                      "QPushButton:pressed { background-color: gray }" )
+        self.search_button.hide()
+        self.web_page = web_windows()
+        self.search_button.clicked.connect(self.search)
         self.setGeometry(500,500,1000,720)
         self.setWindowTitle('Weeds Detection Software')
         self.setWindowIcon(QIcon('icon.jpg'))
@@ -128,7 +150,6 @@ class Windows(QWidget):
 
     def upload(self):
         self.image,_= QFileDialog.getOpenFileName(self, 'Open file', '/home',"Images (*.png *.jpg *jpeg)")
-        
         if self.image:
             self.label4.setText("<b>Image Uploaded Successfully !!!<\b>")
             self.label6.setText("")
@@ -138,6 +159,7 @@ class Windows(QWidget):
             self.button3.setText("Recognize Image")
             self.button3.setIcon(QIcon("recognize.ico"))
             self.button3.setShortcut('shift+R')
+            self.search_button.hide()
         
         
         else:
@@ -156,12 +178,14 @@ class Windows(QWidget):
             self.Task.start()
         
     def Finish(self,val):
-        self.progress.setRange(0,1)
-        self.progress.setValue(1)
-        self.button3.setIcon(QIcon("complete.ico"))
-        self.button3.setText("Done")
-        self.button3.setShortcut('shift+R')
-        self.label4.setText("")
+        string =""
+        self.web_title=""
+        if len(val[1]) > 0:
+            for weed_id, score in val[1].items():
+                string += "<b>"+weed[weed_id]["name"]+"</b>: "+str(round(score*100,2))+"%<br>"
+                self.web_title +=weed[weed_id]["name"]+","
+                string += "<b>the chemical killer</b>:<br>"+weed[weed_id]["action"]+"<br><br>"
+            self.label6.setText(string)
         self.finish_image=val[0]
         height, width, _ = self.finish_image.shape
         bgra = np.zeros([height, width, 4], dtype=np.uint8)
@@ -170,20 +194,25 @@ class Windows(QWidget):
         pixmap3=QPixmap.fromImage(qimg)
         self.label5.setPixmap(pixmap3)
         self.label5.setScaledContents(True)
-        string =""
-        if len(val[1]) > 0:
-            for weed_id, score in val[1].items():
-                string += "<b>"+weed[weed_id]["name"]+"</b>: "+str(round(score*100,2))+"%<br>"
-                string += "<b>the chemical killer</b>:<br>"+weed[weed_id]["action"]+"<br><br>"
-            self.label6.setText(string)
-
+        self.progress.setRange(0,1)
+        self.progress.setValue(1)
+        self.button3.setText("Done")
+        self.button3.setIcon(QIcon("complete.ico"))
+        self.button3.setShortcut('shift+R')
+        self.label4.setText("")
+        self.search_button.show()
 
     def save(self):
         if self.button3.text() =="Done":
             image,ok= QFileDialog.getSaveFileName(self, 'save image', '/home',"Images (*.png *.jpg *jpeg)")
             if ok:
                 cv2.imwrite(image,self.finish_image)
-
+    def search(self):
+        url=[i for i in search("How to kill and prevent "+self.web_title+" weeds", tld='com', lang='en', num=1, stop=1, pause=0.1)]
+        print(url)
+        self.web_page.setWindowTitle("Goole Seartch "+self.web_title[:-1])
+        self.web_page.load(QUrl(url[0]))
+        self.web_page.show()
 
 
         
