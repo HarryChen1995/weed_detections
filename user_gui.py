@@ -184,9 +184,10 @@ class Windows(QWidget):
         if len(val[1]) > 0:
             for weed_id, score in val[1].items():
                 string += "<b>"+weed[weed_id]["name"]+"</b>: "+str(round(score*100,2))+"%<br>"
-                self.web_title +=weed[weed_id]["name"]+","
+                self.web_title +=weed[weed_id]["name"]+" ,"
                 string += "<b>the chemical killer</b>:<br>"+weed[weed_id]["action"]+"<br><br>"
             self.label6.setText(string)
+            self.search_button.show()
         self.finish_image=val[0]
         height, width, _ = self.finish_image.shape
         bgra = np.zeros([height, width, 4], dtype=np.uint8)
@@ -201,7 +202,6 @@ class Windows(QWidget):
         self.button3.setIcon(QIcon("complete.ico"))
         self.button3.setShortcut('shift+R')
         self.label4.setText("")
-        self.search_button.show()
 
     def save(self):
         if self.button3.text() =="Done":
@@ -211,9 +211,9 @@ class Windows(QWidget):
     def search(self):
         if (not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None)): 
             ssl._create_default_https_context = ssl._create_unverified_context
-        url=[i for i in search("How to kill and prevent "+self.web_title+" weeds", tld='com', lang='en', num=1, stop=1, pause=0.1)]
+        url=[i for i in search("How to kill and prevent "+self.web_title[:-2]+" weeds", tld='com', lang='en', num=1, stop=1, pause=0.1)]
         print(url)
-        self.web_page.setWindowTitle("Goole Search "+self.web_title[:-1])
+        self.web_page.setWindowTitle("Goole Search "+self.web_title[:-2])
         self.web_page.load(QUrl(url[0]))
         self.web_page.show()
 
