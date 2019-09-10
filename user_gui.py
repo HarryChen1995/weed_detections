@@ -213,7 +213,7 @@ class Windows(QWidget):
             ssl._create_default_https_context = ssl._create_unverified_context
         url=[i for i in search("How to kill and prevent "+self.web_title[:-2]+" weeds", tld='com', lang='en', num=1, stop=1, pause=0.1)]
         print(url)
-        self.web_page.setWindowTitle("Goole Search "+self.web_title[:-2])
+        self.web_page.setWindowTitle("Google Search "+self.web_title[:-2])
         self.web_page.load(QUrl(url[0]))
         self.web_page.show()
 
