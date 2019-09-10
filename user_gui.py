@@ -1,6 +1,7 @@
 import sys
 import time
 import json
+import os, ssl
 with open("weeds.json","r") as jfile:
     weed=json.loads(jfile.read())
 
@@ -208,9 +209,11 @@ class Windows(QWidget):
             if ok:
                 cv2.imwrite(image,self.finish_image)
     def search(self):
+        if (not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None)): 
+            ssl._create_default_https_context = ssl._create_unverified_context
         url=[i for i in search("How to kill and prevent "+self.web_title+" weeds", tld='com', lang='en', num=1, stop=1, pause=0.1)]
         print(url)
-        self.web_page.setWindowTitle("Goole Seartch "+self.web_title[:-1])
+        self.web_page.setWindowTitle("Goole Search "+self.web_title[:-1])
         self.web_page.load(QUrl(url[0]))
         self.web_page.show()
 
