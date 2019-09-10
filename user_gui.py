@@ -132,7 +132,7 @@ class Windows(QWidget):
 
         
         self.search_button=QPushButton('Google Search',self)
-        self.search_button.setToolTip("Shortcut <b>shift+s</b>")
+        self.search_button.setToolTip("Shortcut <b>shift+R</b>")
         self.search_button.resize(175,50)
         self.search_button.move(500,660)
         self.search_button.setIcon(QIcon("search.ico"))
