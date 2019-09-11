@@ -19,7 +19,8 @@ This software is build using tensorflow framework to detect the most common weed
 
 ## Prepare and Label image data:
 
-All weed images are located in corresponding directory within images folder. In case that you want to try out different type of weeds, you can download more images via [google image download](https://pypi.org/project/google_images_download/) (make sure that images are placed in directory under their name within images folder !). <br>   
+All weed images are located in corresponding directory within [images folder](/images). In case that you want to try out different type of weeds, you can download more images via [google image download](https://pypi.org/project/google_images_download/) (make sure that images are placed in directory under their name within images folder !). <br>
+
 
 ## Usage :
 
