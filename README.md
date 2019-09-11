@@ -44,7 +44,7 @@ After the image is labeled, and press Ctr+S to save all labeled data into xml fi
 
 
 ## Generate tf record:
- Split all labeled images along with their xml files(20% for training and 80% for testing) and place them into [test](images/) and [train](images/) in images folder. And convert all *.xml to csv files by running python scripts from your terminal:
+ Split all labeled images along with their xml files(20% for training and 80% for testing) and place them into [test](images/test) and [train](images/train) in images folder. And convert all *.xml to csv files by running python scripts from your terminal:
 
 ```bash
 $python3 xml_to_csv.py  
