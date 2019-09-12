@@ -114,7 +114,7 @@ After running above scripts, the tfrecod file for both train and test should be 
 
 ## Training The Model:
 
-To train tensorflow model, git clone https://github.com/HarryChen1995/tensorflow_model_API or download the .zip and extract it. Then go to research folder and compile object_detection with protobuf by enter following command from terminal:
+To train tensorflow model, git clone https://github.com/HarryChen1995/tensorflow_model_API or download the .zip and extract it to your desktop. Then go to [research](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research) folder and compile object_detection with protobuf by enter following command from terminal:
 ```bash
 $ protoc object_detection/protos/*.proto --python_out=.
 ```
@@ -125,7 +125,7 @@ $ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 Note: this command need to run for every time you start new terminal.
  To avoid running manually, placing following bash script in your ~/.bashrc:
  ```bash
- export PYTHONPATH=$PYTHONPATH:/home/hanlinchen/Desktop/models/research:/home/hanlinche    n/Desktop/models/research/slim
+ export PYTHONPATH=$PYTHONPATH:/home/username/Desktop/tensorflow_model_API/research:/home/username/Desktop/tensorflow_model_API/research/slim
  ```
  and compile ~/.bashrc from terminal:
  ```bash
@@ -135,16 +135,16 @@ Finally install tensorflow model API by enter following command in research fold
 ```bash
 $python3 setup.py install
 ```
-Now weed need to download physical model (faster_rcnn_inception_v2_coco) from  [Tensorflow detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) and extract it to [object detection folder](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection).
+Now we need to download physical model (faster_rcnn_inception_v2_coco) from  [Tensorflow detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) and extract it to [object detection folder](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection).
 
 Next, copy [data](/data) and [training](/training) folder to [object detection folder](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/), then proceed to train model by entering following command from terminal within  [object detection folder](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection):
 ```bash
 $python3 train.py --logtostderr --train_dir=model_output/ --pipeline_config_path=training/faster_rcnn_inception_v2_coco.config 
 ```
-Note: it may take up to 30-60 seconds to initialize tensorflow, Once initialization finished, the training output for each step will display in terminal:
+Note: it may take up to 30-60 seconds to initialize tensorflow, Once initialization finished, the training output for each step will be displayed in terminal:
 ![alt text](src/image/training_output.png)
 
-Depend on GPU and CPU of your computer, the whole training process may take up to couple hours.  I recommend allowing to train your model until the loss get down below 0.05. After training is finished, you can check total loss of network through tensorboard by running following command within  [object detection](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection) folder:
+Depend on GPU and CPU of your computer, the whole training process may take up to couple hours.  I recommend allowing to train your model until the loss get down below 0.05. After training is finished, you can check total loss of model through tensorboard by running following command within  [object detection](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection) folder:
 ```bash
 $ tensorboard --logdir=model_output
 ```
@@ -163,7 +163,7 @@ Once the training is completed, then generate inference model by enter following
     --trained_checkpoint_prefix \model_output\model.ckpt-latest_checkpoints \
     --output_directory weed
 ```
-Once it is finished, the last step is to  move weed folder into weed_detections folder <b>(we are done finally !!!!)</b>
+After this, the last step is to  move weed folder into weed_detections folder <b>(we are done finally !!!!)</b>
 
 
 ## Usage:
