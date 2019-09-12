@@ -26,7 +26,7 @@ def predict(image_path):
 
     PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
   
-    PATH_TO_LABELS = os.path.join(MODEL_NAME, 'weed_label.pbtxt')
+    PATH_TO_LABELS = os.path.join('data', 'weed_label.pbtxt')
 
     NUM_CLASSES = 3
 

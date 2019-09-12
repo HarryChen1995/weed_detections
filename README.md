@@ -5,15 +5,21 @@
 * [Prepare and Label Image Data](#Prepare-and-Label-image-data)
 * [Generate tfrecord](#Generate-tf-record)
 * [Training Tensorflow Model](#Training-The-Model)
+* [Export Frozen Inference Graph](#Export-Frozen-Inference-Graph)
 ## Introduction  
 This software is build using tensorflow framework to detect the most common weeds in the rural environment. Due to overhead of GPU memory (6G RTX 2060) on my local desktop, I only trained faster_rcnn_inception_v2_coco from [tensorflow object detection models](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) with three type of weeds (dandelion, oxalis,buckhorn plantain). you can definitely train the model to detect more weeds on your computer with much better GPU.   The google search engine also built in software allow users to check out solution to kill that specified weed in real time. Here is a quick demo:<br>
 
 ![demo video](src/video/demo.gif)
 ## Environment Requirements:
+* Linux (Ubuntu)
+* cuda >=9.0
 * Python >= 3.5
-* Tensorflow >=1.4.0
+* Tensorflow-gpu>=1.4.0
 * PyQt5
 * opencv-python3
+* pillow 
+* jupyter notebook
+* matplotlib 
 
 
 
@@ -50,7 +56,7 @@ After the image is labeled, and press Ctr+S to save all labeled data into xml fi
 ```bash
 $python3 xml_to_csv.py  
 ```
-Now we need to create [weed label map](/weed/weed_label.pbtxt) in weed folder:
+Now we need to create [weed label map](/data/weed_label.pbtxt) in data folder:
 ```pbtxt
 item{
 
@@ -107,9 +113,61 @@ After running above scripts, the tfrecod file for both train and test should be 
 
 ## Training The Model:
 
+To train tensorflow model, git clone https://github.com/HarryChen1995/tensorflow_model_API or download the .zip and extract it. Then go to research folder and compile object_detection with protobuf by enter following command from terminal:
+```bash
+$ protoc object_detection/protos/*.proto --python_out=.
+```
+then export slim python path 
+```bash
+$ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+```
+Note: this command need to run for every time you start new terminal.
+ To avoid running manually, placing following bash script in your ~/.bashrc:
+ ```bash
+ export PYTHONPATH=$PYTHONPATH:/home/hanlinchen/Desktop/models/research:/home/hanlinche    n/Desktop/models/research/slim
+ ```
+ and compile ~/.bashrc from terminal:
+ ```bash
+ $ source ~/.bashrc
+ ```
+Finally install tensorflow model API by enter following command in research folder:
+```bash
+$python3 setup.py install
+```
+Now weed need to download physical model (faster_rcnn_inception_v2_coco) from  [Tensorflow detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) and extract it to [object detection folder](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection).
+
+Next, copy [data](/data) and [training](/training) folder to [object detection folder](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/), then proceed to train model by entering following command from terminal within  [object detection folder](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection):
+```bash
+$python3 train.py --logtostderr --train_dir=model_output/ --pipeline_config_path=training/faster_rcnn_inception_v2_coco.config 
+```
+Note: it may take up to 30-60 seconds to initialize tensorflow, Once initialization finished, the training output for each step will display in terminal:
+![alt text](src/image/training_output.png)
+
+Depend on GPU and CPU of your computer, the whole training process may take up to couple hours.  I recommend allowing to train your model until the loss get down below 0.05. After training is finished, you can check total loss of network through tensorboard by running following command within  [object detection](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection) folder:
+```bash
+$ tensorboard --logdir=model_output
+```
+Then open your browser and go to localhost:6006, the loss will be displayed along with its each training step in browser:
+
+ ![alt text](src/image/loss.png)
+
+# Export Frozen Inference Graph:
+
+Once the training is completed, then generate inference model by enter following command from terminal within [object detection](https://github.com/HarryChen1995/tensorflow_model_API/tree/master/research/object_detection) folder:
+
+```bash
+    python3 export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path training/faster_rcnn_inception_v2_coco.config \
+    --trained_checkpoint_prefix \model_output\model.ckpt-latest_checkpoints \
+    --output_directory weed
+```
+Once it is finished, the last step is to  move weed folder into weed_detections folder <b>(we are done finally !!!!)</b>
+
 
 ## Usage :
 
+To run software and enter following command from terminal within weed_detections folder
 ```bash
 $python3 user_gui.py
 ```
