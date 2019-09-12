@@ -3,7 +3,8 @@
 * [Introduction](#Introduction)
 * [Environment Requirements](#Environment-Requirements)
 * [Prepare and Label Image Data](#Prepare-and-Label-image-data)
-* [Generate tf record](#Generate-tf-record)
+* [Generate tfrecord](#Generate-tf-record)
+* [Training Tensorflow Model](#Training-The-Model)
 ## Introduction  
 This software is build using tensorflow framework to detect the most common weeds in the rural environment. Due to overhead of GPU memory (6G RTX 2060) on my local desktop, I only trained faster_rcnn_inception_v2_coco from [tensorflow object detection models](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) with three type of weeds (dandelion, oxalis,buckhorn plantain). you can definitely train the model to detect more weeds on your computer with much better GPU.   The google search engine also built in software allow users to check out solution to kill that specified weed in real time. Here is a quick demo:<br>
 
@@ -43,11 +44,51 @@ After the image is labeled, and press Ctr+S to save all labeled data into xml fi
 
 
 
-## Generate tf record:
+## Generate tfrecord:
  Split all labeled images along with their xml files(20% for training and 80% for testing) and place them into [test](images/test) and [train](images/train) in images folder. And convert all *.xml to csv files by running python scripts from your terminal:
 
 ```bash
 $python3 xml_to_csv.py  
+```
+Now we need to create [weed label map](/weed/weed_label.pbtxt) in weed folder:
+```pbtxt
+item{
+
+    id:1
+    name: 'buckhorn plantain'
+    display_name: 'buckhorn plantain'
+}
+
+item{
+
+    id:2
+    name: 'dandelion'
+    display_name: 'dandelion'
+}
+
+item{
+
+    id:3
+    name: 'oxalis'
+    display_name: 'oxalis'
+}
+```
+
+
+
+Before generating tfrecord file, place following codes in the function called <b>class_text_to_int</b> in [generate_tfrecord.py](/generate_tfrecord.py) (<b>same as label map we just created</b>) 
+
+```python
+def class_text_to_int(row_label):
+    
+    if row_label == 'buckhorn plantain':
+        return 1
+    elif row_label == 'dandelion':
+        return 2
+    elif row_label == 'oxalis':
+        return 3
+    else:
+        None
 ```
 Next, generate tf record file for test and train data just by run python script from your terminal:
 ```bash
@@ -62,6 +103,11 @@ $python3 generate_tfrecord.py\
          --image_dir=images/train/
 ```
 After running above scripts, the tfrecod file for both train and test should be located in [data](data/) folder.
+
+
+## Training The Model:
+
+
 ## Usage :
 
 ```bash
