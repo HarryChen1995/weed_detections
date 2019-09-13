@@ -22,18 +22,14 @@ from utils import label_map_util
 from utils import visualization_utils as vis_util
 
 def predict(image_path):
-    MODEL_NAME = 'weed'
 
-    PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
-  
-    PATH_TO_LABELS = os.path.join('data', 'weed_label.pbtxt')
-
-    NUM_CLASSES = 3
+    inference_graph_path = 'weed/frozen_inference_graph.pb'
+    weed_label_path = 'data/weed_label.pbtxt'
 
     detection_graph = tf.Graph()
     with detection_graph.as_default():
         od_graph_def = tf.GraphDef()
-        with tf.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
+        with tf.gfile.GFile(inference_graph_path, 'rb') as fid:
             serialized_graph = fid.read()
             od_graph_def.ParseFromString(serialized_graph)
             tf.import_graph_def(od_graph_def, name='')
@@ -41,8 +37,8 @@ def predict(image_path):
 
 
 
-    label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
-    categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
+    label_map = label_map_util.load_labelmap(weed_label_path)
+    categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=3, use_display_name=True)
     category_index = label_map_util.create_category_index(categories)
 
     with detection_graph.as_default():
@@ -55,11 +51,11 @@ def predict(image_path):
             scores = detection_graph.get_tensor_by_name('detection_scores:0')
             classes = detection_graph.get_tensor_by_name('detection_classes:0')
             num_detections = detection_graph.get_tensor_by_name('num_detections:0')
-            # Actual detection.
+            
             (boxes, scores, classes, num_detections) = sess.run(
                 [boxes, scores, classes, num_detections],
                 feed_dict={image_tensor: image_np_expanded})
-            # Visualization of the results of a detection.
+            
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image_np,
                 np.squeeze(boxes),
