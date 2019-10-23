@@ -55,7 +55,7 @@ After the image is labeled, and press Ctr+S to save all labeled data into xml fi
  Split all labeled images along with their xml files(80% for training and 20% for testing) and place them into [test](images/test) and [train](images/train) in images folder. And convert all *.xml to csv files by running python scripts from your terminal:
 
 ```bash
-$python3 convert_xml_to_csv.py  
+$python3 convert_xml_to_csv.py  -- test_input images/test  -- train_input  images/train
 ```
 Now we need to create [weed label map](/data/weed_label.pbtxt) in data folder:
 ```pbtxt
