@@ -4,11 +4,13 @@ import glob
 import xml.etree.ElementTree as et
 import argparse
 
-
+#parse argument from command lines  
 ap = argparse.ArgumentParser(description= "Covnert XML files to CSV")
 ap.add_argument("--test_input",help="path to test XML files")
 ap.add_argument("--train_input",help="path to train XML files")
 args =ap.parse_args()
+
+#extract features from test xml files
 feature = []
 for xml in glob.glob(os.path.join(os.getcwd(),args.test_input) + '/*.xml'):
     tree = et.parse(xml)
@@ -27,6 +29,7 @@ for xml in glob.glob(os.path.join(os.getcwd(),args.test_input) + '/*.xml'):
     xml_list = pd.DataFrame(feature, columns=["filename", "width", "height", "class", "xmin", "ymin", "xmax", "ymax"])
     xml_list.to_csv("data/test_labels.csv", index = None)
 
+#extract features from train xml files
 feature = []
 for xml in glob.glob(os.path.join(os.getcwd(),args.train_input) + "/*.xml"):
     tree = et.parse(xml)
