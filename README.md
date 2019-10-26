@@ -160,7 +160,7 @@ Once the training is completed, then generate inference model by enter following
     python3 export_inference_graph.py \
     --input_type image_tensor \
     --pipeline_config_path training/faster_rcnn_inception_v2_coco.config \
-    --trained_checkpoint_prefix \model_output\model.ckpt-latest_checkpoints \
+    --trained_checkpoint_prefix /model_output/model.ckpt-latest_checkpoints \
     --output_directory weed
 ```
 After this, the last step is to  move weed folder into weed_detections folder <b>(we are done finally !!!!)</b>

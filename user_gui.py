@@ -13,10 +13,8 @@ from PyQt5.QtCore import QThread, pyqtSignal,pyqtSlot,Qt,QSize,QUrl
 from PyQt5.QtWidgets import QApplication, QSizePolicy,QDialog, QWidget,QProgressBar,QPushButton,QToolTip,QFileDialog,QInputDialog,QLabel
 from PyQt5.QtGui import QIcon, QFont,QPixmap,QImage,QMovie
 from Predict_Image import predict
-
-
 import cv2
-
+#thread to call wrapper
 class Thread(QThread):
     signal = pyqtSignal(tuple)
     def __init__(self,image_path):
@@ -27,7 +25,7 @@ class Thread(QThread):
         result=predict(self.image_path)
         self.signal.emit(result)
 
-
+#web browser window
 class web_windows(QWebEngineView):
     def __init__(self):
         super(web_windows,self).__init__()
@@ -37,12 +35,12 @@ class web_windows(QWebEngineView):
 
     def InitGUI(self):
         self.setGeometry(200,500,1200,700)
-
+# Main window 
 class Windows(QWidget):
     def __init__(self):
         super(Windows, self).__init__()
         self.InitGUI()
-
+    # initialzed all widgets 
     def InitGUI(self):
         QToolTip.setFont(QFont("SansSerif",10))
         label1 = QLabel(self)
@@ -148,7 +146,7 @@ class Windows(QWidget):
         self.setWindowIcon(QIcon('icon.jpg'))
         self.setStyleSheet(open('stylesheet.css').read())
         self.show()
-
+    # call back function for upload buttons
     def upload(self):
         self.image,_= QFileDialog.getOpenFileName(self, 'Open file', '/home',"Images (*.png *.jpg *jpeg)")
         if self.image:
@@ -165,6 +163,7 @@ class Windows(QWidget):
         
         else:
             self.label4.setText("<b>Failed to Uploade Image!!!<\b>")
+    #start thread and call wrapper function 
     def start_thread(self):
 
         if self.label4.text() != "<b>Image Uploaded Successfully !!!<\b>":
@@ -177,7 +176,7 @@ class Windows(QWidget):
             self.button3.setIcon(QIcon())
             self.button3.setText("working..")
             self.Task.start()
-        
+    # display output data from wrapper function
     def Finish(self,val):
         string =""
         self.web_title=""
@@ -202,12 +201,14 @@ class Windows(QWidget):
         self.button3.setIcon(QIcon("complete.ico"))
         self.button3.setShortcut('shift+R')
         self.label4.setText("")
-
+    # save recognized image
     def save(self):
         if self.button3.text() =="Done":
             image,ok= QFileDialog.getSaveFileName(self, 'save image', '/home',"Images (*.png *.jpg *jpeg)")
             if ok:
                 cv2.imwrite(image,self.finish_image)
+    
+    # run google search Engine
     def search(self):
         if (not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None)): 
             ssl._create_default_https_context = ssl._create_unverified_context
@@ -217,13 +218,8 @@ class Windows(QWidget):
         self.web_page.show()
 
 
-        
-
-
-
-
 if __name__  == "__main__":
-
+    # launch GUI window
     app= QApplication([])
     ex = Windows()
     ex.setAttribute(Qt.WA_StyledBackground) 

@@ -10,22 +10,19 @@ from io import StringIO
 from matplotlib import pyplot as plt 
 plt.switch_backend('Agg')
 from PIL import Image
-
 import cv2
-
 sys.path.append("..")
-
-
-
 from utils import label_map_util
-
 from utils import visualization_utils as vis_util
 
+#wrapper function 
 def predict(image_path):
 
     inference_graph_path = 'weed/frozen_inference_graph.pb'
     weed_label_path = 'data/weed_label.pbtxt'
+    
 
+    #import trained model from protocol buffer 
     detection_graph = tf.Graph()
     with detection_graph.as_default():
         od_graph_def = tf.GraphDef()
@@ -36,11 +33,12 @@ def predict(image_path):
 
 
 
-
+    #read weed label map file and map labels to interger value 
     label_map = label_map_util.load_labelmap(weed_label_path)
     categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=3, use_display_name=True)
     category_index = label_map_util.create_category_index(categories)
 
+    # run inferences on trained model
     with detection_graph.as_default():
         with tf.Session(graph=detection_graph) as sess:
             image_np=cv2.imread(image_path)
@@ -72,4 +70,6 @@ def predict(image_path):
         if max_result[str(int(Class))] < Score:
             max_result[str(int(Class))]=Score
     max_result = dict(max_result)
+    
+    #send back recognized images and accuracy of prediction back to GUI
     return image_np,max_result
