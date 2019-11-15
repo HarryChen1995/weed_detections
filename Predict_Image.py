@@ -3,10 +3,7 @@ import os
 import sys
 import tensorflow as tf
 from collections import Counter
-from io import StringIO
 from matplotlib import pyplot as plt 
-plt.switch_backend('Agg')
-from PIL import Image
 import cv2
 sys.path.append("..")
 from utils import label_map_util
@@ -23,8 +20,8 @@ def predict(image_path):
     detection_graph = tf.Graph()
     with detection_graph.as_default():
         od_graph_def = tf.GraphDef()
-        with tf.gfile.GFile(inference_graph_path, 'rb') as fid:
-            serialized_graph = fid.read()
+        with tf.gfile.GFile(inference_graph_path, 'rb') as f:
+            serialized_graph = f.read()
             od_graph_def.ParseFromString(serialized_graph)
             tf.import_graph_def(od_graph_def, name='')
 
