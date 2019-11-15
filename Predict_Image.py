@@ -1,11 +1,8 @@
 import numpy as np
-import os
-import sys
 import tensorflow as tf
 from collections import Counter
 from matplotlib import pyplot as plt 
 import cv2
-sys.path.append("..")
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
